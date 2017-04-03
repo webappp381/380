@@ -92,20 +92,25 @@ public class TicketController {
     @RequestMapping(value = "create", method = RequestMethod.POST)
     public View create(Form form, Principal principal) throws IOException {
         Ticket ticket = new Ticket();
-        ticket.setId(this.getNextTicketId());
-        ticket.setCustomerName(principal.getName());
-        ticket.setSubject(form.getSubject());
-        ticket.setBody(form.getBody());
-        ticket.setCategories(form.getCategories());
+        if (ticket.getSubject() == null || ticket.getSubject().length() <= 0
+                || ticket.getBody() == null || ticket.getBody().length() <= 0
+                || ticket.getCategories() == null || ticket.getCategories().length() <= 0) {
+            ticket.setId(this.getNextTicketId());
+            ticket.setCustomerName(principal.getName());
 
-        for (MultipartFile filePart : form.getAttachments()) {
-            Attachment attachment = new Attachment();
-            attachment.setName(filePart.getOriginalFilename());
-            attachment.setMimeContentType(filePart.getContentType());
-            attachment.setContents(filePart.getBytes());
-            if (attachment.getName() != null && attachment.getName().length() > 0
-                    && attachment.getContents() != null && attachment.getContents().length > 0) {
-                ticket.addAttachment(attachment);
+            ticket.setSubject(form.getSubject());
+            ticket.setBody(form.getBody());
+            ticket.setCategories(form.getCategories());
+
+            for (MultipartFile filePart : form.getAttachments()) {
+                Attachment attachment = new Attachment();
+                attachment.setName(filePart.getOriginalFilename());
+                attachment.setMimeContentType(filePart.getContentType());
+                attachment.setContents(filePart.getBytes());
+                if (attachment.getName() != null && attachment.getName().length() > 0
+                        && attachment.getContents() != null && attachment.getContents().length > 0) {
+                    ticket.addAttachment(attachment);
+                }
             }
         }
         this.ticketDatabase.put(ticket.getId(), ticket);

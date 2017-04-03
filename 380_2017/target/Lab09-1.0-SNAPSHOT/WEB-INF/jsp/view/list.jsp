@@ -11,6 +11,7 @@
         </form>
 
         <h2>All Post</h2>
+        
         <security:authorize access="hasRole('ADMIN')">    
             <a href="<c:url value="/user" />">Manage User Accounts</a><br /><br />
         </security:authorize>
