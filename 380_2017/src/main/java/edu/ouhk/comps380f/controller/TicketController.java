@@ -53,6 +53,15 @@ public class TicketController {
 
         private String subject;
         private String body;
+        private String categories;
+
+        public String getCategories() {
+            return categories;
+        }
+
+        public void setCategories(String categories) {
+            this.categories = categories;
+        }
         private List<MultipartFile> attachments;
 
         public String getSubject() {
@@ -87,6 +96,7 @@ public class TicketController {
         ticket.setCustomerName(principal.getName());
         ticket.setSubject(form.getSubject());
         ticket.setBody(form.getBody());
+        ticket.setCategories(form.getCategories());
 
         for (MultipartFile filePart : form.getAttachments()) {
             Attachment attachment = new Attachment();

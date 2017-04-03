@@ -10,6 +10,15 @@ public class Ticket {
     private String customerName;
     private String subject;
     private String body;
+    private String categories;
+
+    public String getCategories() {
+        return categories;
+    }
+
+    public void setCategories(String categories) {
+        this.categories = categories;
+    }
     private Map<String, Attachment> attachments = new LinkedHashMap<>();
 
     public long getId() {

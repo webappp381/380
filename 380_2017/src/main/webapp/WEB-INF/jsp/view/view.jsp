@@ -19,9 +19,10 @@
         </security:authorize>
         <br /><br />
         <i>Post by - <c:out value="${ticket.customerName}" /></i><br /><br />
+        Categories: <c:out value="${ticket.categories}"/><br /><br />
         <c:out value="${ticket.body}" /><br /><br />
         <c:if test="${ticket.numberOfAttachments > 0}">
-            Attachments:
+            File(s):
             <c:forEach items="${ticket.attachments}" var="attachment"
                        varStatus="status">
                 <c:if test="${!status.first}">, </c:if>

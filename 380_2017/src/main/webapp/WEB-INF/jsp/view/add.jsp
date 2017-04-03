@@ -17,6 +17,9 @@
             <form:input type="text" path="subject" /><br/><br/>
             <form:label path="body">Contents</form:label><br/>
             <form:textarea path="body" rows="5" cols="30" /><br/><br/>
+            <form:radiobutton path="categories" value="lecture" />Lecture
+            <form:radiobutton path="categories" value="lab" />Lab
+            <form:radiobutton path="categories" value="other" />Other<br/><br/>
             <b>Files</b><br/>
             <input type="file" name="attachments" multiple="multiple"/><br/><br/>
             <input type="submit" value="Submit"/>
