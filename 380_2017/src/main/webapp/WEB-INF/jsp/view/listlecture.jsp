@@ -15,9 +15,10 @@
         <security:authorize access="hasRole('ADMIN')">    
             <a href="<c:url value="/user" />">Manage User Accounts</a><br /><br />
         </security:authorize>
-        <a href="<c:url value="/ticket/create" />">New Post</a>  lecture
-        lab
-        other
+        <a href="<c:url value="/ticket/create" />">New Post</a>
+        <a href="<c:url value="/ticket/listlecture" />">lecture</a>
+        <a href="<c:url value="/ticket/listlab" />">lab</a>
+        <a href="<c:url value="/ticket/listother" />">other</a>
         <br /><br />
        
         <c:choose>
@@ -27,7 +28,7 @@
             <c:otherwise>
 
                           <c:forEach items="${ticketDatabase}" var="entry2">
-                            <c:if test="${entry2.value.categories == 'lecture'}" >only lecture<br>
+                            <c:if test="${entry2.value.categories == 'lecture'}" >
                               Post #${entry2.key}:
                               <a href="<c:url value="/ticket/view/${entry2.key}" />"> 
                               <c:out value="${entry2.value.subject}" /></a>
