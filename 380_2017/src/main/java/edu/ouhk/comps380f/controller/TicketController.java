@@ -166,6 +166,10 @@ public class TicketController {
         ModelAndView modelAndView = new ModelAndView("edit");
         modelAndView.addObject("ticketId", Long.toString(ticketId));
         modelAndView.addObject("ticket", ticket);
+        
+        ModelAndView modelAndView2 = new ModelAndView("list");
+        modelAndView2.addObject("ticketId2", Long.toString(ticketId));
+        modelAndView2.addObject("ticket2", ticket);
 
         Form ticketForm = new Form();
         ticketForm.setSubject(ticket.getSubject());
