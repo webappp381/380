@@ -24,6 +24,5 @@
             <input type="file" name="attachments" multiple="multiple"/><br/><br/>
             <input type="submit" value="Submit"/>
         </form:form>
-           
     </body>
 </html>

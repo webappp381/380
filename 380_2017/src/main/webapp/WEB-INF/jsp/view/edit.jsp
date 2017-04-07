@@ -16,10 +16,10 @@
             <form:label path="subject">Title</form:label><br/>
             <form:input type="text" path="subject" /><br/><br/>
             Categories: <c:out value="${ticket.categories}"/><br /><br />
-            <form:label path="body">Content</form:label><br/>
+            <form:label path="body">Contents</form:label><br/>
             <form:textarea path="body" rows="5" cols="30" /><br/><br/>
             <c:if test="${ticket.numberOfAttachments > 0}">
-                <b>File:</b><br/>
+                <b>Files</b><br/>
                 <ul>
                     <c:forEach items="${ticket.attachments}" var="attachment">
                         <li>

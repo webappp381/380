@@ -79,6 +79,7 @@ public class CreateUserController {
         for (String role : form.getRoles()) {
             user.addRole(role);
         }
+        
         ticketUserRepo.create(user);
         logger.info("User " + form.getUsername() + " created.");
         return new RedirectView("/login", true);

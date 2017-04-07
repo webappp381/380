@@ -1,36 +1,16 @@
 package edu.ouhk.comps380f.model;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
-public class Ticket {
+public class ReplyTicket {
 
     private long id;
-    private String customerName;
-    private String subject;
-    private String body;
+    private long refTicketid;
+    private String replybody;
+ 
     private Map<String, Attachment> attachments = new LinkedHashMap<>();
-    private List<Long> replyId = new ArrayList<>();
-    private String categories;
-
-    public String getCategories() {
-        return categories;
-    }
-
-    public void setCategories(String categories) {
-        this.categories = categories;
-    }
-
-    public List<Long> getReplyId() {
-        return replyId;
-    }
-
-    public void setReplyId(long replyId) {
-        this.replyId.add(replyId);
-    }
 
     public long getId() {
         return id;
@@ -40,28 +20,20 @@ public class Ticket {
         this.id = id;
     }
 
-    public String getCustomerName() {
-        return customerName;
+    public long getRefTicketid() {
+        return refTicketid;
     }
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
+    public void setRefTicketid(long refTicketid) {
+        this.refTicketid = refTicketid;
     }
 
-    public String getSubject() {
-        return subject;
+    public String getReplybody() {
+        return replybody;
     }
 
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
-    public String getBody() {
-        return body;
-    }
-
-    public void setBody(String body) {
-        this.body = body;
+    public void setReplybody(String replybody) {
+        this.replybody = replybody;
     }
 
     public Attachment getAttachment(String name) {

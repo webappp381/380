@@ -1,10 +1,12 @@
 package edu.ouhk.comps380f.controller;
 
 import edu.ouhk.comps380f.model.Attachment;
+import edu.ouhk.comps380f.model.ReplyTicket;
 import edu.ouhk.comps380f.model.Ticket;
 import edu.ouhk.comps380f.view.DownloadingView;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,26 +26,41 @@ import org.springframework.web.servlet.view.RedirectView;
 public class TicketController {
 
     private volatile long TICKET_ID_SEQUENCE = 1;
-    private Map<Long, Ticket> ticketDatabase = new LinkedHashMap<>();
-
+   
+    public static Map<Long, Ticket> ticketDatabase = new LinkedHashMap<>();
+    public static Map<Long, ReplyTicket> replyTicketDatabase = new LinkedHashMap<>();
+ 
+    
     @RequestMapping(value = {"", "list"}, method = RequestMethod.GET)
     public String list(ModelMap model) {
         model.addAttribute("ticketDatabase", ticketDatabase);
+        model.addAttribute("replyTicketDatabase",replyTicketDatabase );
         return "list";
     }
+    
 
     @RequestMapping(value = "view/{ticketId}", method = RequestMethod.GET)
     public ModelAndView view(@PathVariable("ticketId") long ticketId) {
         Ticket ticket = this.ticketDatabase.get(ticketId);
+        //List<ReplyTicket> selectedReply = new ArrayList<>();
+        Map<Long, ReplyTicket> OneReply = new LinkedHashMap<>();
+        //if selectedReply refid=ticketid -> OneReply
+       for(int i=0;i<ticket.getReplyId().size();i++){
+         OneReply.put(Long.valueOf(i+1), this.replyTicketDatabase.get(ticket.getReplyId().get(i)));        
+       }
+
         if (ticket == null) {
             return new ModelAndView(new RedirectView("/ticket/list", true));
         }
         ModelAndView modelAndView = new ModelAndView("view");
         modelAndView.addObject("ticketId", Long.toString(ticketId));
         modelAndView.addObject("ticket", ticket);
+        modelAndView.addObject("selectedReply", OneReply);
         return modelAndView;
     }
-
+    
+    
+    
     @RequestMapping(value = "create", method = RequestMethod.GET)
     public ModelAndView create() {
         return new ModelAndView("add", "ticketForm", new Form());
@@ -65,11 +82,12 @@ public class TicketController {
         return "listother";
     }
 
-
     public static class Form {
 
         private String subject;
         private String body;
+        private List<MultipartFile> attachments;
+        private List replyId;
         private String categories;
 
         public String getCategories() {
@@ -79,7 +97,14 @@ public class TicketController {
         public void setCategories(String categories) {
             this.categories = categories;
         }
-        private List<MultipartFile> attachments;
+
+        public List getReplyId() {
+            return replyId;
+        }
+
+        public void setReplyId(List replyId) {
+            this.replyId = replyId;
+        }
 
         public String getSubject() {
             return subject;
@@ -105,7 +130,7 @@ public class TicketController {
             this.attachments = attachments;
         }
     }
-
+ 
     @RequestMapping(value = "create", method = RequestMethod.POST)
     public View create(Form form, Principal principal) throws IOException {
         Ticket ticket = new Ticket();
@@ -114,7 +139,6 @@ public class TicketController {
                 || ticket.getCategories() == null || ticket.getCategories().length() <= 0) {
             ticket.setId(this.getNextTicketId());
             ticket.setCustomerName(principal.getName());
-
             ticket.setSubject(form.getSubject());
             ticket.setBody(form.getBody());
             ticket.setCategories(form.getCategories());
@@ -137,7 +161,8 @@ public class TicketController {
     private synchronized long getNextTicketId() {
         return this.TICKET_ID_SEQUENCE++;
     }
-
+    
+    
     @RequestMapping(
             value = "/{ticketId}/attachment/{attachment:.+}",
             method = RequestMethod.GET

@@ -27,9 +27,26 @@
                        varStatus="status">
                 <c:if test="${!status.first}">, </c:if>
                 <a href="<c:url value="/ticket/${ticketId}/attachment/${attachment.name}" />">
-                    <c:out value="${attachment.name}" /></a>
+                    <c:out value="${attachment.name}" /></a>       
             </c:forEach><br /><br />
         </c:if>
-        <a href="<c:url value="/ticket" />">Return to main page</a>
+            
+            <c:choose>
+            <c:when test="${fn:length(selectedReply) == 0}">
+                <i>There are no reply in the system.</i>
+            </c:when>
+            <c:otherwise>
+ 
+                <c:forEach items="${selectedReply}" var="entry">
+                    replyid <c:out value="${entry.key}"/>
+                    
+                    (reply cotent: <c:out value="${entry.value.replybody}" />)
+                  
+                    <br /><br />
+                </c:forEach>
+            </c:otherwise>
+        </c:choose>
+         <a href="<c:url value="/reply/${ticketId}" />">Reply</a>         
+        <a href="<c:url value="/ticket" />">Return to list tickets</a>
     </body>
 </html>
