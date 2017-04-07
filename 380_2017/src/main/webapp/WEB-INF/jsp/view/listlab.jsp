@@ -11,7 +11,7 @@
         </form>
 
         <h2>All Post</h2>
-        
+
         <security:authorize access="hasRole('ADMIN')">    
             <a href="<c:url value="/user" />">Manage User Accounts</a><br /><br />
         </security:authorize>
@@ -20,34 +20,26 @@
         <a href="<c:url value="/ticket/listlab" />">lab</a>
         <a href="<c:url value="/ticket/listother" />">other</a>
         <br /><br />
-       
         <c:choose>
             <c:when test="${fn:length(ticketDatabase) == 0}">
                 <i>0 Post.</i>
             </c:when>
             <c:otherwise>
-                     
-                          <c:forEach items="${ticketDatabase}" var="entry3">
-                            <c:if test="${entry3.value.categories == 'lab'}" >
-                              Post #${entry3.key}:
-                              <a href="<c:url value="/ticket/view/${entry3.key}" />"> 
-                              <c:out value="${entry3.value.subject}" /></a>
-                              (Post by: <c:out value="${entry3.value.customerName}" />)
-                              <hr>
-                            </c:if>
-                          </c:forEach>
-                 
-                      
-                      
-    
-                    <security:authorize access="hasRole('ADMIN') or principal.username=='${entry.value.customerName}'">            
-                        [<a href="<c:url value="/ticket/edit/${entry.key}" />">Edit</a>]
+                <c:forEach items="${ticketDatabase}" var="entry3">
+                    <c:if test="${entry3.value.categories == 'lab'}" >
+                        Post #${entry3.key}:
+                        <a href="<c:url value="/ticket/view/${entry3.key}" />"> 
+                            <c:out value="${entry3.value.subject}" /></a>
+                        (Post by: <c:out value="${entry3.value.customerName}" />)                      
+                    <security:authorize access="hasRole('ADMIN') or principal.username=='${entry3.value.customerName}'">            
+                        [<a href="<c:url value="/ticket/edit/${entry3.key}" />">Edit</a>]
                     </security:authorize>
                     <security:authorize access="hasRole('ADMIN')">            
-                        [<a href="<c:url value="/ticket/delete/${entry.key}" />">Delete</a>]
+                        [<a href="<c:url value="/ticket/delete/${entry3.key}" />">Delete</a>]
                     </security:authorize>
-                    <br /><br />
-                
+                    <hr>
+                    </c:if>  
+                </c:forEach>
             </c:otherwise>
         </c:choose>
     </body>
