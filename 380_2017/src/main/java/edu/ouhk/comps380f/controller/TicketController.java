@@ -48,6 +48,23 @@ public class TicketController {
     public ModelAndView create() {
         return new ModelAndView("add", "ticketForm", new Form());
     }
+    
+    @RequestMapping(value = "listlecture", method = RequestMethod.GET)
+    public String listlecture(ModelMap model) {
+        model.addAttribute("ticketDatabase", ticketDatabase);
+        return "listlecture";
+    }
+    @RequestMapping(value = "listlab", method = RequestMethod.GET)
+    public String listlab(ModelMap model) {
+        model.addAttribute("ticketDatabase", ticketDatabase);
+        return "listlab";
+    }
+    @RequestMapping(value = "listother", method = RequestMethod.GET)
+    public String listother(ModelMap model) {
+        model.addAttribute("ticketDatabase", ticketDatabase);
+        return "listother";
+    }
+
 
     public static class Form {
 

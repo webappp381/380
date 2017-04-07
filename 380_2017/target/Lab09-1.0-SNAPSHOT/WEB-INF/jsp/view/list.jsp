@@ -15,9 +15,10 @@
         <security:authorize access="hasRole('ADMIN')">    
             <a href="<c:url value="/user" />">Manage User Accounts</a><br /><br />
         </security:authorize>
-        <a href="<c:url value="/ticket/create" />">New Post</a>  lecture
-        lab
-        other
+        <a href="<c:url value="/ticket/create" />">New Post</a>  
+        <a href="<c:url value="/ticket/listlecture" />">lecture</a>
+        <a href="<c:url value="/ticket/listlab" />">lab</a>
+        <a href="<c:url value="/ticket/listother" />">other</a>
         <br /><br />
        
         <c:choose>
